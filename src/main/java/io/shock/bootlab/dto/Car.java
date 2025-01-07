@@ -1,18 +1,20 @@
 package io.shock.bootlab.dto;
 
+import io.shock.bootlab.service.excel.ExcelColumn;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
+@AllArgsConstructor
 @Getter
-@Setter
 public class Car {
-    private String name;
+    @ExcelColumn
+    private String carName;
+    @ExcelColumn(header = "YEAR")
     private int year;
+    @ExcelColumn(header = "RATING")
+    private double rating;
 
-    public static Car of(String name, int year) {
-        Car car = new Car();
-        car.setName(name);
-        car.setYear(year);
-        return car;
+    public static Car of(String carName, int year, double rating) {
+        return new Car(carName, year, rating);
     }
 }
