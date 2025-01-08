@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="/js/test.js"></script>
+  <script src="/messages/message_ko.js"></script>
+  <script src="/messages/message_en.js"></script>
+  <title>Document</title>
+</head>
+<body>
+Hello world
+<script>
+  console.log(MESSAGES_EN);
+  console.log(MESSAGES_KO);
+
+  const messageStore = {
+    greeting: 'Hello, {0} {1}!',
+    farewell: 'Goodbye, {0}!',
+    simple: 'This is a simple message.',
+  };
+
+  function getMessage(key, replacements = []) {
+    // key로 메시지 조회
+    const messageTemplate = messageStore[key];
+    if (!messageTemplate) {
+      return `Message not found for key: ${key}`; // 키에 해당하는 메시지가 없을 경우
+    }
+
+    // 치환 문자 배열로 {0}, {1} 등의 대체 문자 치환
+    return replacements.reduce((result, replacement, index) => {
+      const placeholder = `\\{${index}\\}`;
+      return result.replace(new RegExp(placeholder, 'g'), replacement);
+    }, messageTemplate);
+  }
+
+  // 사용 예시
+  console.log(getMessage('greeting', ['John', 'Doe'])); // "Hello, John Doe!"
+  console.log(getMessage('farewell', ['Alice'])); // "Goodbye, Alice!"
+  console.log(getMessage('simple')); // "This is a simple message."
+  console.log(getMessage('nonexistent')); // "Message not found for key: nonexistent"
+
+</script>
+</body>
+</html>
