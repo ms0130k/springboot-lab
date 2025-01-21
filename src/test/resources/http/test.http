@@ -1,5 +1,13 @@
 ### GET request to example server
 GET http://localhost:8080/json
 
+###
+GET http://localhost:9090/quiz?code=3
 
 ###
+POST http://localhost:9090/quiz
+Content-Type: application/json
+
+{
+"value": 3
+}
