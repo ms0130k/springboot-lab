@@ -1,9 +1,3 @@
-server:
-  port: 9090
 spring:
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-    defer-datasource-initialization: true
+  profiles:
+    default: local
