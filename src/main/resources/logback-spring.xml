@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <!-- 콘솔 로그 출력 (필요하면 제거 가능) -->
+    <!-- 공통 패턴 설정 -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" />
+
+    <!-- 콘솔 로그 설정 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
     <!-- 파일 로그 설정 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>C:/logs/app-log.log</file>  <!-- 기본 로그 파일 (최신 로그 유지) -->
-
+        <file>C:/logs/app-log.log</file> <!-- 기본 로그 파일 -->
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
 
         <!-- 롤링 정책 (파일 크기 + 날짜) -->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>C:/logs/%d{yyyy/MM}/app-log-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
-            <maxFileSize>1KB</maxFileSize>  <!-- 파일 크기가 10MB를 초과하면 새로운 파일 생성 -->
+            <maxFileSize>10MB</maxFileSize>
         </rollingPolicy>
     </appender>
 
-    <!-- 로거 설정 -->
-    <root level="INFO">
-<!--        <appender-ref ref="CONSOLE"/>-->
-        <appender-ref ref="FILE"/>
-    </root>
+    <!-- profile에 따른 로그 설정 -->
+    <springProfile name="local">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev,prod">
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
 
 </configuration>

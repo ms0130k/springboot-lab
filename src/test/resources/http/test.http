@@ -11,3 +11,6 @@ Content-Type: application/json
 {
 "value": 3
 }
+
+###
+GET localhost:9090/message?code=aaa.button.send
